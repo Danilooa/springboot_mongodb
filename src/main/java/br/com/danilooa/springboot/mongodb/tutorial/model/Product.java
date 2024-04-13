@@ -2,7 +2,10 @@ package br.com.danilooa.springboot.mongodb.tutorial.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 @Document("product")
@@ -14,6 +17,9 @@ public class Product {
     private String name;
 
     private String description;
+
+    @Field(targetType = FieldType.DECIMAL128)
+    private BigDecimal price;
 
     private byte[] image;
 
@@ -41,6 +47,13 @@ public class Product {
         this.description = description;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
     public byte[] getImage() {
         return image;
     }
