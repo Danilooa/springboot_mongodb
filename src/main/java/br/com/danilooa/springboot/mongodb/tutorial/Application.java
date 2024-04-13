@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 
 @SpringBootApplication
-@EnableMongoRepositories
+@EnableReactiveMongoRepositories
 public class Application implements CommandLineRunner {
 
     @Autowired
@@ -24,13 +26,13 @@ public class Application implements CommandLineRunner {
 
     public void run(String... args) {
         Product product = new Product();
-        product.setName("Gipson Les Paul");
-        product.setDescription(" G doesn't tune");
+        product.setName("Gibson Les Paul");
+        product.setDescription("G doesn't tune");
         product.setPrice(new BigDecimal("2000.849"));
-        Product save = productRepository.save(product);
 
-        System.out.println("Product was saved: " + save);
+        Mono<Product> insert = productRepository.insert(product);
+        Flux<Product> findAll = productRepository.findAll();
 
-        System.out.println(productRepository.findAll());
+        Flux.merge(insert).thenMany(findAll).doOnNext(System.out::println).blockLast();
     }
 }

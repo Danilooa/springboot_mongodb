@@ -68,6 +68,7 @@ public class Product {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", price: ='" + price + "'" +
                 ", image=" + (image != null ? Arrays.toString(image).substring(0, 10) + "..." : "") +
                 '}';
     }
