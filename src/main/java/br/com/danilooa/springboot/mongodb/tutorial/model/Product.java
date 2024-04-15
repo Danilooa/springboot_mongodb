@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 @Document("product")
 public class Product {
@@ -21,7 +20,7 @@ public class Product {
     @Field(targetType = FieldType.DECIMAL128)
     private BigDecimal price;
 
-    private byte[] image;
+    private String image;
 
     public String getId() {
         return id;
@@ -54,11 +53,12 @@ public class Product {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    public byte[] getImage() {
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -69,7 +69,7 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price: ='" + price + "'" +
-                ", image=" + (image != null ? Arrays.toString(image).substring(0, 10) + "..." : "") +
+                ", image=" + image +
                 '}';
     }
 }
